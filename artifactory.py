@@ -2962,6 +2962,9 @@ class ArtifactoryBuildManager(ArtifactoryPath):
         resp = self._accessor.get_response(obj, quote=False).json()
         return resp
 
+    def _safe_quote(self, input):
+        return urllib.parse.quote(input, safe='', encoding=None, errors=None)
+
     def get_build_diff(self, build_name, build_number1, build_number2):
         """
         Compares build with build_number1 to build_number2
@@ -3011,7 +3014,7 @@ class ArtifactoryBuildManager(ArtifactoryPath):
         :param fail_fast: fail and abort the operation upon receiving an error. Default: true
         :return:
         """
-        url = f"{self.drive}/api/build/promote/{build_name}/{build_number}"
+        url = f"{self.drive}/api/build/promote/{self._safe_quote(build_name)}/{self._safe_quote(build_number)}"
 
         if not isinstance(properties, dict):
             raise ArtifactoryException("properties must be a dict")
