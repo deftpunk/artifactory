@@ -325,7 +325,7 @@ class HTTPResponseWrapper(object):
         return int(self.getheader("content-length"))
 
 
-def encode_matrix_parameters(parameters, quote_parameters):
+def encode_matrix_parameters(parameters, quote_parameters=False):
     """
     Performs encoding of url matrix parameters from dictionary to
     a string.
